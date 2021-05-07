@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include "xcode_redirect.hpp"
 using namespace std;
 
 
@@ -24,16 +25,21 @@ public:
             printBoard();
             return;
         }
-        if(isdigit(board[row][col])) {
-            total++;
+        if(row > 8 || col > 8) { //no solution exists
+            cout << "No solution";
+            return;
+        }
+        if(isdigit(board[row][col])) { //pre-input digit, go to next spot
             solve(row + (col + 1)/9, (col + 1) % 9);
         }
-        else {
+        else { //iterate over all possibilites for the spot
             for(size_t v = 0; v < nums.size(); v++) {
                 if(promising(row, col, nums[v])) {
                     board[row][col] = nums[v];
+                    total++;
                     solve(row + (col + 1)/9, (col + 1) % 9);
                     board[row][col] = '*';
+                    total--;
                 }
             }
         }
@@ -121,7 +127,7 @@ private:
 
     uint32_t total;
     vector<vector<char>> board;
-    const vector<char> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    const vector<char> nums = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 };
 
 int main(int argc, char* argv[]) {
