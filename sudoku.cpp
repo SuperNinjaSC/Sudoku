@@ -124,7 +124,10 @@ private:
     const vector<char> nums = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 };
 
-int main() {
+int main(int argc, char* argv[]) {
+    ios_base::sync_with_stdio(false);
+    xcode_redirect(argc, argv); //file redirection
+
     Sudoku s;
     s.solve(0,0);
 }
