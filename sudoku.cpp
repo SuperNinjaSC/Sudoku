@@ -7,7 +7,7 @@ using namespace std;
 
 class Sudoku {
 public:
-    Sudoku() : total(0) {
+    Sudoku() : total(0), numSols(0) {
         board.resize(9, vector<char>(9));
         char c;
         uint32_t count = 0;
@@ -22,7 +22,10 @@ public:
 
     void solve(uint32_t row, uint32_t col) {
         if(total == 81) { //solution
-            printBoard();
+            if(numSols == 0) {
+                printBoard();
+            }
+            numSols++;
             return;
         }
         if(row > 8 || col > 8) { //no solution exists
@@ -43,6 +46,10 @@ public:
                 }
             }
         }
+    }
+
+    uint32_t getNumSols() {
+        return numSols;
     }
 
 private:
@@ -126,6 +133,7 @@ private:
     }
 
     uint32_t total;
+    uint32_t numSols;
     vector<vector<char>> board;
     const vector<char> nums = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 };
@@ -136,4 +144,5 @@ int main(int argc, char* argv[]) {
 
     Sudoku s;
     s.solve(0,0);
+    cout << "Number of solutions: " << s.getNumSols() << "\n";
 }
